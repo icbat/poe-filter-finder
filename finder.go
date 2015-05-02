@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+)
 import "os"
+import "net/http"
 
 func main() {
 	fmt.Println("Checking environment")
@@ -21,10 +25,10 @@ func main() {
 	fmt.Println("Found PoE folder at: " + path)
 
 	fmt.Println("Reticulating splines")
-	fmt.Println("Downloading filter file to temp directory: " + os.TempDir())
-	filterURL := "https://raw.githubusercontent.com/icbat/LootFilter/master/ThioleLootFilter"
+	filterName := "ThioleLootFilter"
+	filterURL := "https://raw.githubusercontent.com/icbat/LootFilter/master/" + filterName
 	fmt.Println("Grabbing filter file from: " + filterURL)
-	downloadTo(filterURL, os.TempDir())
+	downloadTo(filterURL, path+"/"+filterName)
 }
 
 func resolveEnvVariables() string {
@@ -40,11 +44,14 @@ func pathExists(path string) bool {
 	return false
 }
 
-func downloadTo(remotePath string, targetDirectory string) {
-	tempFile, err := os.Create(os.TempDir() + "/poe-filter-file.txt")
+func downloadTo(url string, targetFile string) {
+	response, err := http.Get(url)
 	if err != nil {
-		return
-	}
-	defer tempFile.Close()
 
+	}
+	defer response.Body.Close()
+
+	bytes, err := ioutil.ReadAll(response.Body)
+
+	ioutil.WriteFile(targetFile, bytes, 0644)
 }
