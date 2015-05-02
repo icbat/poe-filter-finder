@@ -29,6 +29,18 @@ func main() {
 	filterURL := "https://raw.githubusercontent.com/icbat/LootFilter/master/" + filterName
 	fmt.Println("Grabbing " + filterName + " from: " + filterURL)
 	downloadTo(filterURL, path+"/"+filterName)
+
+	fmt.Println(`Done!
+
+	To finish the install:
+
+	1) Restart Path of Exile Beta if you have it open
+	2) Start game
+	3) Login to Beta
+	4) Esc > Options
+	5) GO to UI tab, at the bottom select the filter, once it says "Filter loaded successfully" no restart required, you are good to go
+	6) Any updates to the filter can be reloaded without restarting the game by clicking the "reload" button in options
+		`)
 }
 
 func pathExists(path string) bool {
