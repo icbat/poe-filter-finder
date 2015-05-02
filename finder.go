@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"net/http"
+	"os"
 )
-import "os"
-import "net/http"
 
 func main() {
 	fmt.Println("Checking environment")
-	basePath := resolveEnvVariables()
+	basePath := os.Getenv("UserProfile")
 	if basePath == "" {
 		fmt.Println(" -- Couldn't resolve environment variables!")
 		return
@@ -27,12 +27,8 @@ func main() {
 	fmt.Println("Reticulating splines")
 	filterName := "ThioleLootFilter"
 	filterURL := "https://raw.githubusercontent.com/icbat/LootFilter/master/" + filterName
-	fmt.Println("Grabbing filter file from: " + filterURL)
+	fmt.Println("Grabbing " + filterName + " from: " + filterURL)
 	downloadTo(filterURL, path+"/"+filterName)
-}
-
-func resolveEnvVariables() string {
-	return os.Getenv("UserProfile")
 }
 
 func pathExists(path string) bool {
@@ -40,18 +36,26 @@ func pathExists(path string) bool {
 	if err == nil {
 		return true
 	}
-	fmt.Println(err)
 	return false
 }
 
 func downloadTo(url string, targetFile string) {
-	response, err := http.Get(url)
-	if err != nil {
-
+	response, getError := http.Get(url)
+	if getError != nil {
+		fmt.Println(" -- Couldn't GET: " + url)
+		return
 	}
 	defer response.Body.Close()
 
-	bytes, err := ioutil.ReadAll(response.Body)
+	bytes, readError := ioutil.ReadAll(response.Body)
+	if readError != nil {
+		fmt.Println(" -- Couldn't read file at: " + url)
+		return
+	}
 
-	ioutil.WriteFile(targetFile, bytes, 0644)
+	fileError := ioutil.WriteFile(targetFile, bytes, 0644)
+	if fileError != nil {
+		fmt.Println(" -- Couldn't write to file at: " + targetFile)
+		return
+	}
 }
