@@ -5,7 +5,7 @@ import "os"
 
 func main() {
 	fmt.Println("Checking environment")
-	basePath := resolveenvironment()
+	basePath := resolveEnvVariables()
 	if basePath == "" {
 		fmt.Println(" -- Couldn't resolve environment variables!")
 		return
@@ -14,21 +14,21 @@ func main() {
 
 	fmt.Println("Verifying directories")
 	path := basePath + "/Documents/My Games/Path of Exile"
-	if !direxists(path) {
+	if !pathExists(path) {
 		fmt.Println(" -- Couldn't find a folder at " + path)
 		return
 	}
 	fmt.Println("Targeting: " + path)
 
 	fmt.Println("Reticulating splines")
-	fmt.Println("Downloading filter file")
+	fmt.Println("Downloading filter file to temp directory: " + os.TempDir())
 }
 
-func resolveenvironment() string {
+func resolveEnvVariables() string {
 	return os.Getenv("UserProfile")
 }
 
-func direxists(path string) bool {
+func pathExists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true
