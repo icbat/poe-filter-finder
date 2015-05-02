@@ -18,10 +18,13 @@ func main() {
 		fmt.Println(" -- Couldn't find a folder at " + path)
 		return
 	}
-	fmt.Println("Targeting: " + path)
+	fmt.Println("Found PoE folder at: " + path)
 
 	fmt.Println("Reticulating splines")
 	fmt.Println("Downloading filter file to temp directory: " + os.TempDir())
+	filterURL := "https://raw.githubusercontent.com/icbat/LootFilter/master/ThioleLootFilter"
+	fmt.Println("Grabbing filter file from: " + filterURL)
+	downloadTo(filterURL, os.TempDir())
 }
 
 func resolveEnvVariables() string {
@@ -35,4 +38,13 @@ func pathExists(path string) bool {
 	}
 	fmt.Println(err)
 	return false
+}
+
+func downloadTo(remotePath string, targetDirectory string) {
+	tempFile, err := os.Create(os.TempDir() + "/poe-filter-file.txt")
+	if err != nil {
+		return
+	}
+	defer tempFile.Close()
+
 }
