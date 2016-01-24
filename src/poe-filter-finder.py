@@ -29,5 +29,6 @@ filters = findFilters()
 print("Downloading filter to there")
 downloadAllFiltersTo(filters, installDirectory)
 
-print("BOOM! Go get loot with prettier colors.")
+print("BOOM! Filters are installed!")
+print("In Path of Exile, open Options, navigate to the UI Tab and scroll to the bottom to choose one")
 input("Press enter to exit")
