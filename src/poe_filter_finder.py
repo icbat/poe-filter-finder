@@ -19,11 +19,11 @@ def find_filters():
     return filters
 
 
-def download_filters_to(filters, target_directory):
-    for url in filters:
+def download_filters_to(urls, target_directory, urllib_request=urllib.request):
+    for url in urls:
         filename = get_filename(url)
         print("  Grabbing " + filename + " from " + url)
-        urllib.request.urlretrieve(url, target_directory + filename)
+        urllib_request.urlretrieve(url, target_directory + filename)
         print("  Successfully installed " + filename)
 
 
