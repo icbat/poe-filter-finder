@@ -34,15 +34,16 @@ def get_filename(url):
     return split[parts - 1]
 
 
-print("Finding your Path of Exile install")
-install_directory = find_poe_directory()
+if __name__ == "__main__":
+    print("Finding your Path of Exile install")
+    install_directory = find_poe_directory()
 
-print("Finding Filters")
-filters = find_filters()
+    print("Finding Filters")
+    filters = find_filters()
 
-print("Downloading filter to there")
-download_filters_to(filters, install_directory)
+    print("Downloading filter to there")
+    download_filters_to(filters, install_directory)
 
-print("BOOM! Filters are installed!")
-print("In Path of Exile, open Options, navigate to the UI Tab and scroll to the bottom to choose one")
-input("Press enter to exit")
+    print("BOOM! Filters are installed!")
+    print("In Path of Exile, open Options, navigate to the UI Tab and scroll to the bottom to choose one")
+    input("Press enter to exit")
