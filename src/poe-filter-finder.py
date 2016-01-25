@@ -2,33 +2,32 @@ import os
 import urllib.request
 
 
-def findPathInstallDirectory():
-    userHome = os.path.expanduser("~")
-    installPath = userHome + "/Documents/My Games/Path of Exile/"
-    print("Checking for Path at path " + installPath)
-    if os.path.isdir(installPath):
-        print("Found it at " + installPath)
-        return installPath
+def find_poe_directory():
+    user_home_directory = os.path.expanduser("~")
+    install_path = user_home_directory + "/Documents/My Games/Path of Exile/"
+    print("Checking for Path at path " + install_path)
+    if os.path.isdir(install_path):
+        print("Found it at " + install_path)
+        return install_path
     else:
-        raise FileNotFoundError("Couldn't find your Path of Exile installation. Checked at " + installPath)
+        raise FileNotFoundError("Couldn't find your Path of Exile installation. Checked at " + install_path)
 
 
-def findFilters():
-    filters = []
-    filters.append(
-        "https://gist.githubusercontent.com/icbat/a2376c23dbfca3f92bbb/raw/dbd42a0f15b66054dd94d9eff7a5aac05328bb16/icbat-loot.filter")
+def find_filters():
+    filters = [
+        "https://gist.githubusercontent.com/icbat/a2376c23dbfca3f92bbb/raw/dbd42a0f15b66054dd94d9eff7a5aac05328bb16/icbat-loot.filter"]
     return filters
 
 
-def downloadAllFiltersTo(filters, installDirectory):
+def download_filters_to(filters, target_directory):
     for url in filters:
-        fileName = findFileName(url)
-        print("  Grabbing " + fileName + " from " + url)
-        urllib.request.urlretrieve(url, installDirectory + fileName)
-        print("  Successfully installed " + fileName)
+        filename = get_filename(url)
+        print("  Grabbing " + filename + " from " + url)
+        urllib.request.urlretrieve(url, target_directory + filename)
+        print("  Successfully installed " + filename)
 
 
-def findFileName(url):
+def get_filename(url):
     split = str(url).split("/")
     parts = len(split)
 
@@ -36,13 +35,13 @@ def findFileName(url):
 
 
 print("Finding your Path of Exile install")
-installDirectory = findPathInstallDirectory()
+install_directory = find_poe_directory()
 
 print("Finding Filters")
-filters = findFilters()
+filters = find_filters()
 
 print("Downloading filter to there")
-downloadAllFiltersTo(filters, installDirectory)
+download_filters_to(filters, install_directory)
 
 print("BOOM! Filters are installed!")
 print("In Path of Exile, open Options, navigate to the UI Tab and scroll to the bottom to choose one")
