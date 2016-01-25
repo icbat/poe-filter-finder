@@ -2,11 +2,11 @@ import os
 import urllib.request
 
 
-def find_poe_directory():
-    user_home_directory = os.path.expanduser("~")
+def find_poe_directory(os_path=os.path):
+    user_home_directory = os_path.expanduser("~")
     install_path = user_home_directory + "/Documents/My Games/Path of Exile/"
     print("Checking for Path at path " + install_path)
-    if os.path.isdir(install_path):
+    if os_path.isdir(install_path):
         print("Found it at " + install_path)
         return install_path
     else:
