@@ -1,5 +1,5 @@
 import os
-import urllib.request
+import requests
 
 
 def find_poe_directory(os_path=os.path):
@@ -19,11 +19,16 @@ def find_filters():
     return filters
 
 
-def download_filters_to(urls, target_directory, urllib_request=urllib.request):
+def download_filters_to(urls, target_directory, requests_module=requests):
     for url in urls:
         filename = get_filename(url)
         print("  Grabbing " + filename + " from " + url)
-        urllib_request.urlretrieve(url, target_directory + filename)
+        target = target_directory + filename
+
+        response = requests_module.get(url)
+        with open(target, 'w') as file:
+            file.write(response.text)
+
         print("  Successfully installed " + filename)
 
 

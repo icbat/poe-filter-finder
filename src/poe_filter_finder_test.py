@@ -1,4 +1,5 @@
 from poe_filter_finder import get_filename, find_poe_directory, download_filters_to
+import os
 
 
 def get_filename_test_happy():
@@ -62,13 +63,25 @@ def download_filters_to_test_no_urls_does_no_work():
 
 def download_filters_to_test_requests_urls():
     request = MockUrlRequest()
-    urls = ["a", "b", "123"]
+    files = ["file.txt", "loot.filter", "items.filter"]
 
-    download_filters_to(urls, "destination", request)
+    download_filters_to(files, "", requests_module=request)
 
-    assert len(request.invocations) == len(urls)
-    for url in urls:
-        assert url in request.invocations
+    assert len(request.invocations) == len(files)
+    for file in files:
+        assert file in request.invocations
+        assert os.path.isfile(file)
+
+    for file in files:
+        os.remove(file)
+
+
+class MockResponse(object):
+    def __init__(self, text):
+        self.text = text
+
+    def text(self):
+        return self.text
 
 
 class MockUrlRequest(object):
@@ -77,3 +90,7 @@ class MockUrlRequest(object):
 
     def urlretrieve(self, url, target):
         self.invocations.append(url)
+
+    def get(self, url):
+        self.invocations.append(url)
+        return MockResponse(url)
