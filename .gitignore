@@ -1,4 +1,13 @@
+# PyInstaller files
 build/
 dist/
-poe-filter-finder.spec
+poe_filter_finder.spec
+
+# PyCharm files
 .idea/
+
+# Virtual Env stuff
+Include/
+Lib/
+Scripts/
+pip-selfcheck.json
