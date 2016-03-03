@@ -15,7 +15,7 @@ def find_poe_directory(os_path=os.path):
 
 def find_filters():
     filters = [
-        "https://gist.githubusercontent.com/icbat/a2376c23dbfca3f92bbb/raw/dbd42a0f15b66054dd94d9eff7a5aac05328bb16/icbat-loot.filter"]
+        "https://gist.githubusercontent.com/icbat/a2376c23dbfca3f92bbb/raw/071794bbbad1bcb196af2d44c9559b95d7c35358/icbat-loot.filter"]
     return filters
 
 
